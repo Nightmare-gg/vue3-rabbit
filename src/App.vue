@@ -2,8 +2,7 @@
 </script>
 
 <template>
-   <el-button type="success">Success</el-button>
-</template>
+ <el-button type="primary">Primary</el-button></template>
 
 <style scoped>
 header {
