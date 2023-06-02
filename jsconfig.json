@@ -1,3 +1,4 @@
+// 只做联想功能
 {
   "compilerOptions": {
     "baseUrl": "./",
