@@ -6,3 +6,18 @@ export function getBannerAPI() {
         url: 'home/banner'
     })
 }
+
+// 获取新鲜好物
+export const getNewAPI = ()=> {
+    return httpInstance({
+        url: '/home/new'
+    })
+}
+
+// 获取人气推荐
+
+export const getHotAPI = ()=> {
+    return httpInstance({
+        url: 'home/hot'
+    })
+}
