@@ -1,37 +1,9 @@
 <script setup>
-import {getCategoryAPI} from '@/apis/category'
-import { ref,onMounted } from 'vue';
-import {useRoute} from 'vue-router'
-import { getBannerAPI } from '@/apis/home';
-import { onBeforeRouteUpdate } from 'vue-router';
-import GoodsItem from '../Home/components/GoodsItem.vue';
-// 获取数据
-const categoryDate=ref({})
-const route = useRoute()
-const getCategory = async (id = route.params.id)=> {
-    const res = await getCategoryAPI(id)
-    categoryDate.value = res.result
-    
-}
-onMounted(()=>getCategory())
-
-// 目标：路由参数变化的时候，可以把分类数据接口重新发送
-onBeforeRouteUpdate((to)=> {
-  // 存在问题： 使用最新的路由参数请求最新的分类数据
-  getCategory(to.params.id)
-})
-
-// 获取banner
-const bannerList = ref([])
-
-const getBanner = async ()=> {
-  const res = await getBannerAPI({
-    distributionSite: '2'
-  })
-  bannerList.value = res.result
-}
-
-onMounted(()=> getBanner())
+import GoodsItem from '../Home/components/GoodsItem.vue'
+import { useBanner } from './composables/useBanner'
+import { useCategory } from './composables/useCategory'
+const { bannerList } = useBanner()
+const { categoryData } = useCategory()
 
 </script>
 
@@ -42,7 +14,7 @@ onMounted(()=> getBanner())
       <div class="bread-container">
         <el-breadcrumb separator=">">
           <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-          <el-breadcrumb-item>{{ categoryDate.name}}</el-breadcrumb-item>
+          <el-breadcrumb-item>{{ categoryData.name}}</el-breadcrumb-item>
         </el-breadcrumb>
       </div>
        <!-- 轮播图 -->
@@ -56,7 +28,7 @@ onMounted(()=> getBanner())
       <div class="sub-list">
         <h3>全部分类</h3>
         <ul>
-          <li v-for="i in categoryDate.children" :key="i.id">
+          <li v-for="i in categoryData.children" :key="i.id">
             <RouterLink :to="`/category/sub/${i.id}`">
               <img :src="i.picture" />
               <p>{{ i.name }}</p>
@@ -64,7 +36,7 @@ onMounted(()=> getBanner())
           </li>
         </ul>
       </div>
-      <div class="ref-goods" v-for="item in categoryDate.children" :key="item.id">
+      <div class="ref-goods" v-for="item in categoryData.children" :key="item.id">
         <div class="head">
           <h3>- {{ item.name }}-</h3>
         </div>
