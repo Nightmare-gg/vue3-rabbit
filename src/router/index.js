@@ -9,6 +9,7 @@ import Category from '@/views/Category/Index.vue'
 import SubCategory from '@/views/SubCategory/Index.vue'
 import Detail from '@/views/Detail/Index.vue'
 import CartList from '@/views/CartList/Index.vue'
+import Checkout from '@/views/Checkout/Index.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -34,17 +35,21 @@ const router = createRouter({
         {
           path: 'detail/:id',
           component: Detail
-        }
+        },{
+          path: '/cartlist',
+          component: CartList
+         },
+         {
+          path: '/checkout',
+          component: Checkout
+         }
       ]
    },
    {
      path: '/login',
      component: Login,
    },
-   {
-    path: '/cartlist',
-    component: CartList
-   }
+
   ],
   // 路由滚动行为定制
   scrollBehavior() {
