@@ -33,6 +33,14 @@ export const useCartStore = defineStore('cart',()=> {
         const item = cartList.value.find((item)=> item.skuId === skuId)
         item.selected = selected
     }
+    // 购物车全选功能
+    const allCheck = (selected)=> {
+        // 把cartList中每一项的selected都设置为当前的全选框状态
+        cartList.value.forEach(item=> item.selected=selected)
+    } 
+
+    // 是否全选计算属性
+    const isAll = computed(()=> cartList.value.every((item)=> item.selected))
     // 计算购物车 计算属性
     // 1总的数量 所有项的count之和
     const allCount = computed(()=> cartList.value.reduce((a,c)=>a+c.count,0))
@@ -44,7 +52,9 @@ export const useCartStore = defineStore('cart',()=> {
         delCart,
         allCount,
         allPrice,
-        singleCheck
+        singleCheck,
+        isAll,
+        allCheck,
     }
 },{
         persist: true
